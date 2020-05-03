@@ -1,0 +1,16 @@
+linux把capslock键映射成ctrl的方法
+
+众所周知，emacs下按ctrl相当累，而我有从来不用capslock这个键，所以直接把它映射成ctrl，方法如下：
+
+linux(我的发行版是debian):
+console下:
+修改/etc/default/keyboard
+XKBOPTIONS="ctrl:nocaps"
+
+X下:
+使用xmodmap
+加入~/.xmodmap文件
+remove Lock = Caps_Lock
+keysym Caps_Lock = Control_L
+add Control = Control_L
+并且使得X启动时启动xmodmap

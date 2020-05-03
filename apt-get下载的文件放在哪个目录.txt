@@ -1,0 +1,17 @@
+apt-get下载的文件放在哪个目录
+
+　　apt-get install **这样的命令会下载文件放在 /var/cache/apt/archives目录下，然后安装。这样这个目录所占空间会越来越大，幸运的是apt提供了相应的管理工具apt-get clean删除/var/cache/apt/archives/ 和 /var/cache/apt/archives/partial/目录下所有包(锁定的除外)。
+
+　　apt-get autoclean仅删除不再能被下载的包.  另外aptitude clean也可删除/var/cache/apt/archives/ 和 /var/cache/apt/archives/partial/目录下所有包(锁定的除外)。
+
+　　apt-get
+
+　　这个不用多说了Debian最基本的包管理程序。快速、实用、高效。
+
+　　手册：http://www.debian.org/doc/manual ... zh-cn.html#contents
+
+　　aptitude
+
+　　是在主控台 (Console) 上的套件管理程式的第一选择。aptitude 支援了大部份的 apt-get 在命令列上的操作指令，且在处理相依问题上，通过在安装时在相关包上加标注使它在卸载时表现优於 apt-get。Debian对于aptitude也是很推崇的。
+
+　　aptitude并不是apt-get的前端程序，他有自己的一套算法。songbei6注:aptitude在ubuntu下也有。

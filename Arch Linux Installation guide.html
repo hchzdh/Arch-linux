@@ -1,0 +1,356 @@
+<!DOCTYPE html> <html class=client-js lang=en dir=ltr style><!--
+ Page saved with SingleFile 
+ url: https://wiki.archlinux.org/index.php/Installation_guide#Network_configuration 
+ saved date: Thu Apr 23 2020 08:32:45 GMT+0800 (中国标准时间)
+-->
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-Installation_guide rootpage-Installation_guide skin-vector action-view">
+
+
+<div id=content class=mw-body role=main>
+ <a id=top></a>
+ 
+ <div class="mw-indicators mw-body-content">
+</div>
+ <h1 id=firstHeading class=firstHeading lang=en>Installation guide</h1>
+ 
+ <div id=bodyContent class=mw-body-content>
+ <div id=siteSub class="noprint sf-hidden">From ArchWiki</div>
+ <div id=contentSub></div>
+ 
+ 
+ 
+ <div id=jump-to-nav></div>
+ <a class=mw-jump-link href=#mw-head>Jump to navigation</a>
+ <a class=mw-jump-link href=#p-search>Jump to search</a>
+ <div id=mw-content-text lang=en dir=ltr class=mw-content-ltr><div class=mw-parser-output><p class>This document is a guide for installing <a href=https://wiki.archlinux.org/index.php/Arch_Linux title="Arch Linux">Arch Linux</a> from the live system booted with the official installation image. Before installing, it would be advised to view the <a href=https://wiki.archlinux.org/index.php/FAQ class=mw-redirect title=FAQ>FAQ</a>. For conventions used in this document, see <a href=https://wiki.archlinux.org/index.php/Help:Reading title=Help:Reading>Help:Reading</a>. In particular, code examples may contain placeholders (formatted in <code class><i class>italics</i></code>) that must be replaced manually.
+<p class>For more detailed instructions, see the respective <a href=https://wiki.archlinux.org/index.php/ArchWiki class=mw-redirect title=ArchWiki>ArchWiki</a> articles or the various programs' <a href=https://wiki.archlinux.org/index.php/Man_page title="Man page">man pages</a>, both linked from this guide. For interactive help, the <a href=https://wiki.archlinux.org/index.php/IRC_channel class=mw-redirect title="IRC channel">IRC channel</a> and the <a rel=nofollow class="external text" href=https://bbs.archlinux.org/>forums</a> are also available.
+<p class>Arch Linux should run on any <a href=https://en.wikipedia.org/wiki/X86-64 class=extiw title=wikipedia:X86-64>x86_64</a>-compatible machine with a minimum of 512 MiB RAM. A basic installation should take less than 2 GiB of disk space. As the installation process needs to retrieve packages from a remote repository, this guide assumes a working internet connection is available.
+</p>
+<div id=toc class=toc><input type=checkbox role=button id=toctogglecheckbox class=toctogglecheckbox style=display:none><div class=toctitle lang=en dir=ltr><h2 class>Contents</h2><span class=toctogglespan><label class=toctogglelabel for=toctogglecheckbox></label></span></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href=#Pre-installation><span class=tocnumber>1</span> <span class=toctext>Pre-installation</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href=#Verify_signature><span class=tocnumber>1.1</span> <span class=toctext>Verify signature</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href=#Boot_the_live_environment><span class=tocnumber>1.2</span> <span class=toctext>Boot the live environment</span></a></li>
+<li class="toclevel-2 tocsection-4"><a href=#Set_the_keyboard_layout><span class=tocnumber>1.3</span> <span class=toctext>Set the keyboard layout</span></a></li>
+<li class="toclevel-2 tocsection-5"><a href=#Verify_the_boot_mode><span class=tocnumber>1.4</span> <span class=toctext>Verify the boot mode</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href=#Connect_to_the_internet><span class=tocnumber>1.5</span> <span class=toctext>Connect to the internet</span></a></li>
+<li class="toclevel-2 tocsection-7"><a href=#Update_the_system_clock><span class=tocnumber>1.6</span> <span class=toctext>Update the system clock</span></a></li>
+<li class="toclevel-2 tocsection-8"><a href=#Partition_the_disks><span class=tocnumber>1.7</span> <span class=toctext>Partition the disks</span></a>
+<ul>
+<li class="toclevel-3 tocsection-9"><a href=#Example_layouts><span class=tocnumber>1.7.1</span> <span class=toctext>Example layouts</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-10"><a href=#Format_the_partitions><span class=tocnumber>1.8</span> <span class=toctext>Format the partitions</span></a></li>
+<li class="toclevel-2 tocsection-11"><a href=#Mount_the_file_systems><span class=tocnumber>1.9</span> <span class=toctext>Mount the file systems</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-12"><a href=#Installation><span class=tocnumber>2</span> <span class=toctext>Installation</span></a>
+<ul>
+<li class="toclevel-2 tocsection-13"><a href=#Select_the_mirrors><span class=tocnumber>2.1</span> <span class=toctext>Select the mirrors</span></a></li>
+<li class="toclevel-2 tocsection-14"><a href=#Install_essential_packages><span class=tocnumber>2.2</span> <span class=toctext>Install essential packages</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-15"><a href=#Configure_the_system><span class=tocnumber>3</span> <span class=toctext>Configure the system</span></a>
+<ul>
+<li class="toclevel-2 tocsection-16"><a href=#Fstab><span class=tocnumber>3.1</span> <span class=toctext>Fstab</span></a></li>
+<li class="toclevel-2 tocsection-17"><a href=#Chroot><span class=tocnumber>3.2</span> <span class=toctext>Chroot</span></a></li>
+<li class="toclevel-2 tocsection-18"><a href=#Time_zone><span class=tocnumber>3.3</span> <span class=toctext>Time zone</span></a></li>
+<li class="toclevel-2 tocsection-19"><a href=#Localization><span class=tocnumber>3.4</span> <span class=toctext>Localization</span></a></li>
+<li class="toclevel-2 tocsection-20"><a href=#Network_configuration><span class=tocnumber>3.5</span> <span class=toctext>Network configuration</span></a></li>
+<li class="toclevel-2 tocsection-21"><a href=#Initramfs><span class=tocnumber>3.6</span> <span class=toctext>Initramfs</span></a></li>
+<li class="toclevel-2 tocsection-22"><a href=#Root_password><span class=tocnumber>3.7</span> <span class=toctext>Root password</span></a></li>
+<li class="toclevel-2 tocsection-23"><a href=#Boot_loader><span class=tocnumber>3.8</span> <span class=toctext>Boot loader</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-24"><a href=#Reboot><span class=tocnumber>4</span> <span class=toctext>Reboot</span></a></li>
+<li class="toclevel-1 tocsection-25"><a href=#Post-installation><span class=tocnumber>5</span> <span class=toctext>Post-installation</span></a></li>
+</ul>
+</div>
+<h2 class><span class=mw-headline id=Pre-installation>Pre-installation</span></h2>
+<p class>The installation media and their <a href=https://wiki.archlinux.org/index.php/GnuPG title=GnuPG>GnuPG</a> signatures can be acquired from the <a rel=nofollow class="external text" href=https://archlinux.org/download/>Download</a> page.
+</p>
+<h3 class><span class=mw-headline id=Verify_signature>Verify signature</span></h3>
+<p class>It is recommended to verify the image signature before use, especially when downloading from an <i>HTTP mirror</i>, where downloads are generally prone to be intercepted to <a rel=nofollow class="external text" href=https://www2.cs.arizona.edu/stork/packagemanagersecurity/attacks-on-package-managers.html>serve malicious images</a>. 
+<p class>On a system with <a href=https://wiki.archlinux.org/index.php/GnuPG title=GnuPG>GnuPG</a> installed, do this by downloading the <i>PGP signature</i> (under <i>Checksums</i>) to the ISO directory, and <a href=https://wiki.archlinux.org/index.php/GnuPG#Verify_a_signature title=GnuPG>verifying</a> it with: 
+</p>
+<pre class>$ gpg --keyserver-options auto-key-retrieve --verify archlinux-<i>version</i>-x86_64.iso.sig
+</pre>
+<p class>Alternatively, from an existing Arch Linux installation run:
+</p>
+<pre class>$ pacman-key -v archlinux-<i>version</i>-x86_64.iso.sig
+</pre>
+<div class="archwiki-template-box archwiki-template-box-note"><strong>Note:</strong> 
+<ul><li class>The signature itself could be manipulated if it is downloaded from a mirror site, instead of from <a rel=nofollow class="external text" href=https://archlinux.org/download/>archlinux.org</a> as above. In this case, ensure that the public key, which is used to decode the signature, is signed by another, trustworthy key. The <code>gpg</code> command will output the fingerprint of the public key.</li>
+<li class>Another method to verify the authenticity of the signature is to ensure that the public key's fingerprint is identical to the key fingerprint of the <a rel=nofollow class="external text" href=https://www.archlinux.org/people/developers/>Arch Linux developer</a> who signed the ISO-file. See <a href=https://en.wikipedia.org/wiki/Public-key_cryptography class=extiw title="wikipedia:Public-key cryptography">Wikipedia:Public-key cryptography</a> for more information on the public-key process to authenticate keys.</ul>
+</div>
+<h3 class><span class=mw-headline id=Boot_the_live_environment>Boot the live environment</span></h3>
+<p class>The live environment can be booted from a <a href=https://wiki.archlinux.org/index.php/USB_flash_installation_media title="USB flash installation media">USB flash drive</a>, an <a href=https://wiki.archlinux.org/index.php/Optical_disc_drive#Burning title="Optical disc drive">optical disc</a> or a network with <a href=https://wiki.archlinux.org/index.php/PXE title=PXE>PXE</a>. For alternative means of installation, see <a href=https://wiki.archlinux.org/index.php/Category:Installation_process title="Category:Installation process">Category:Installation process</a>.
+</p>
+<ul><li class>Pointing the current boot device to a drive containing the Arch installation media is typically achieved by pressing a key during the <a href=https://en.wikipedia.org/wiki/Power-on_self_test class=extiw title="wikipedia:Power-on self test">POST</a> phase, as indicated on the splash screen. Refer to your motherboard's manual for details.</li>
+<li>When the Arch menu appears, select <i>Boot Arch Linux</i> and press <code>Enter</code> to enter the installation environment.</li>
+<li class>See <a rel=nofollow class="external text" href=https://projects.archlinux.org/archiso.git/tree/docs/README.bootparams>README.bootparams</a> for a list of <a href=https://wiki.archlinux.org/index.php/Kernel_parameters#Configuration title="Kernel parameters">boot parameters</a>, and <a rel=nofollow class="external text" href=https://git.archlinux.org/archiso.git/tree/configs/releng/packages.x86_64>packages.x86_64</a> for a list of included packages.</li>
+<li class>You will be logged in on the first <a href=https://en.wikipedia.org/wiki/Virtual_console class=extiw title="wikipedia:Virtual console">virtual console</a> as the root user, and presented with a <a href=https://wiki.archlinux.org/index.php/Zsh title=Zsh>Zsh</a> shell prompt.</ul>
+<p class>To switch to a different console—for example, to view this guide with <a href=https://wiki.archlinux.org/index.php/ELinks title=ELinks>ELinks</a> alongside the installation—use the <code>Alt+<i>arrow</i></code> <a href=https://wiki.archlinux.org/index.php/Keyboard_shortcuts title="Keyboard shortcuts">shortcut</a>. To <a href=https://wiki.archlinux.org/index.php/Textedit class=mw-redirect title=Textedit>edit</a> configuration files, <a href=https://wiki.archlinux.org/index.php/Nano#Usage title=Nano>nano</a>, <a href=https://en.wikipedia.org/wiki/vi class=extiw title=wikipedia:vi>vi</a> and <a href=https://wiki.archlinux.org/index.php/Vim#Usage title=Vim>vim</a> are available.
+</p>
+<h3 class><span class=mw-headline id=Set_the_keyboard_layout>Set the keyboard layout</span></h3>
+<p class>The default <a href=https://wiki.archlinux.org/index.php/Console_keymap class=mw-redirect title="Console keymap">console keymap</a> is <a href=https://en.wikipedia.org/wiki/File:KB_United_States-NoAltGr.svg class=extiw title="wikipedia:File:KB United States-NoAltGr.svg">US</a>. Available layouts can be listed with:
+</p>
+<pre class># ls /usr/share/kbd/keymaps/**/*.map.gz
+</pre>
+<p>To modify the layout, append a corresponding file name to <span class="plainlinks archwiki-template-man" title="$ man 1 loadkeys"><a rel=nofollow class="external text" href=https://jlk.fjfi.cvut.cz/arch/manpages/man/loadkeys.1>loadkeys(1)</a></span>, omitting path and file extension. For example, to set a <a href=https://en.wikipedia.org/wiki/File:KB_Germany.svg class=extiw title="wikipedia:File:KB Germany.svg">German</a> keyboard layout:
+</p>
+<pre class># loadkeys de-latin1
+</pre>
+<p><a href=https://wiki.archlinux.org/index.php/Console_fonts class=mw-redirect title="Console fonts">Console fonts</a> are located in <code>/usr/share/kbd/consolefonts/</code> and can likewise be set with <span class="plainlinks archwiki-template-man" title="$ man 8 setfont"><a rel=nofollow class="external text" href=https://jlk.fjfi.cvut.cz/arch/manpages/man/setfont.8>setfont(8)</a></span>.
+</p>
+<h3><span class=mw-headline id=Verify_the_boot_mode>Verify the boot mode</span></h3>
+<p class>If UEFI mode is enabled on an <a href=https://wiki.archlinux.org/index.php/UEFI class=mw-redirect title=UEFI>UEFI</a> motherboard, <a href=https://wiki.archlinux.org/index.php/Archiso title=Archiso>Archiso</a> will <a href=https://wiki.archlinux.org/index.php/Boot class=mw-redirect title=Boot>boot</a> Arch Linux accordingly via <a href=https://wiki.archlinux.org/index.php/Systemd-boot title=Systemd-boot>systemd-boot</a>. To verify this, list the <a href=https://wiki.archlinux.org/index.php/UEFI#UEFI_variables class=mw-redirect title=UEFI>efivars</a> directory:
+</p>
+<pre class># ls /sys/firmware/efi/efivars
+</pre>
+<p class>If the directory does not exist, the system may be booted in <a href=https://en.wikipedia.org/wiki/BIOS class=extiw title=wikipedia:BIOS>BIOS</a> or CSM mode. Refer to your motherboard's manual for details.
+</p>
+<h3><span class=mw-headline id=Connect_to_the_internet>Connect to the internet</span></h3>
+<p class>To set up a network connection, go through the following steps:
+</p>
+<ul class><li class>Ensure your <a href=https://wiki.archlinux.org/index.php/Network_interface class=mw-redirect title="Network interface">network interface</a> is listed and enabled, for example with <span class="plainlinks archwiki-template-man" title="$ man 8 ip-link"><a rel=nofollow class="external text" href=https://jlk.fjfi.cvut.cz/arch/manpages/man/ip-link.8>ip-link(8)</a></span>: <pre class># ip link</pre></li>
+<li class>Connect to the network. Plug in the Ethernet cable or <a href=https://wiki.archlinux.org/index.php/Wireless_network_configuration class=mw-redirect title="Wireless network configuration">connect to the wireless LAN</a>.</li>
+<li class>Configure your network connection:
+<ul><li class><a href=https://wiki.archlinux.org/index.php/Network_configuration#Static_IP_address title="Network configuration">Static IP address</a></li>
+<li class>Dynamic IP address: use <a href=https://wiki.archlinux.org/index.php/DHCP class=mw-redirect title=DHCP>DHCP</a>.</ul>
+<dl><dd><div class="archwiki-template-box archwiki-template-box-note"><strong>Note:</strong> The installation image enables <a href=https://wiki.archlinux.org/index.php/Dhcpcd title=Dhcpcd>dhcpcd</a> (<code>dhcpcd@<i>interface</i>.service</code>) for <a rel=nofollow class="external text" href=https://git.archlinux.org/archiso.git/tree/configs/releng/airootfs/etc/udev/rules.d/81-dhcpcd.rules>wired network devices</a> on boot.</div></dl></li>
+<li class>The connection may be verified with <a href=https://en.wikipedia.org/wiki/ping class=extiw title=wikipedia:ping>ping</a>: <pre class># ping archlinux.org</pre></ul>
+<h3 class><span class=mw-headline id=Update_the_system_clock>Update the system clock</span></h3>
+<p>Use <span class="plainlinks archwiki-template-man" title="$ man 1 timedatectl"><a rel=nofollow class="external text" href=https://jlk.fjfi.cvut.cz/arch/manpages/man/timedatectl.1>timedatectl(1)</a></span> to ensure the system clock is accurate:
+</p>
+<pre># timedatectl set-ntp true
+</pre>
+<p>To check the service status, use <code>timedatectl status</code>.
+</p>
+<h3 class><span class=mw-headline id=Partition_the_disks>Partition the disks</span></h3>
+<p>When recognized by the live system, disks are assigned to a <a href=https://wiki.archlinux.org/index.php/Block_device class=mw-redirect title="Block device">block device</a> such as <code>/dev/sda</code> or <code>/dev/nvme0n1</code>. To identify these devices, use <a href=https://wiki.archlinux.org/index.php/Lsblk class=mw-redirect title=Lsblk>lsblk</a> or <i>fdisk</i>.
+</p>
+<pre># fdisk -l
+</pre>
+<p class>Results ending in <code>rom</code>, <code>loop</code> or <code>airoot</code> may be ignored.
+<p>The following <a href=https://wiki.archlinux.org/index.php/Partition class=mw-redirect title=Partition>partitions</a> are <b>required</b> for a chosen device:
+</p>
+<ul><li>One partition for the root directory <code>/</code>.</li>
+<li class>If <a href=https://wiki.archlinux.org/index.php/UEFI class=mw-redirect title=UEFI>UEFI</a> is enabled, an <a href=https://wiki.archlinux.org/index.php/EFI_system_partition title="EFI system partition">EFI system partition</a>.</ul>
+<p>If you want to create any stacked block devices for <a href=https://wiki.archlinux.org/index.php/LVM title=LVM>LVM</a>, <a href=https://wiki.archlinux.org/index.php/Dm-crypt title=Dm-crypt>system encryption</a> or <a href=https://wiki.archlinux.org/index.php/RAID title=RAID>RAID</a>, do it now.
+</p>
+<h4><span class=mw-headline id=Example_layouts>Example layouts</span></h4>
+<table class=wikitable>
+<tbody><tr>
+<th colspan=5>BIOS with <a href=https://wiki.archlinux.org/index.php/MBR class=mw-redirect title=MBR>MBR</a>
+</tr>
+<tr>
+<th>Mount point
+</th>
+<th>Partition
+</th>
+<th><a href=https://en.wikipedia.org/wiki/Partition_type class=extiw title="wikipedia:Partition type">Partition type</a>
+</th>
+<th>Suggested size
+</tr>
+<tr>
+<td><code>/mnt</code>
+</td>
+<td><code>/dev/sd<i>X</i>1</code>
+</td>
+<td>Linux
+</td>
+<td>Remainder of the device
+</tr>
+<tr>
+<td>[SWAP]
+</td>
+<td><code>/dev/sd<i>X</i>2</code>
+</td>
+<td>Linux swap
+</td>
+<td>More than 512 MiB
+</tr>
+<tr>
+<th colspan=5>UEFI with <a href=https://wiki.archlinux.org/index.php/GPT class=mw-redirect title=GPT>GPT</a>
+</tr>
+<tr>
+<th>Mount point
+</th>
+<th>Partition
+</th>
+<th><a href=https://en.wikipedia.org/wiki/GUID_Partition_Table#Partition_type_GUIDs class=extiw title="wikipedia:GUID Partition Table">Partition type</a>
+</th>
+<th>Suggested size
+</tr>
+<tr>
+<td><code>/mnt/boot</code> or <code>/mnt/efi</code>
+</td>
+<td><code>/dev/sd<i>X</i>1</code>
+</td>
+<td><a href=https://wiki.archlinux.org/index.php/EFI_system_partition title="EFI system partition">EFI system partition</a>
+</td>
+<td>260–512 MiB
+</tr>
+<tr>
+<td><code>/mnt</code>
+</td>
+<td><code>/dev/sd<i>X</i>2</code>
+</td>
+<td>Linux x86-64 root (/)
+</td>
+<td>Remainder of the device
+</tr>
+<tr>
+<td>[SWAP]
+</td>
+<td><code>/dev/sd<i>X</i>3</code>
+</td>
+<td>Linux swap
+</td>
+<td>More than 512 MiB
+</tr>
+</table>
+<p class>See also <a href=https://wiki.archlinux.org/index.php/Partitioning#Example_layouts title=Partitioning>Partitioning#Example layouts</a>.
+</p>
+<div class="archwiki-template-box archwiki-template-box-note"><strong>Note:</strong> 
+<ul><li>Use <a href=https://wiki.archlinux.org/index.php/Fdisk title=Fdisk>fdisk</a> or <a href=https://wiki.archlinux.org/index.php/Parted title=Parted>parted</a> to modify partition tables, for example <code>fdisk /dev/sd<i>X</i></code>.</li>
+<li><a href=https://wiki.archlinux.org/index.php/Swap title=Swap>Swap</a> space can be set on a <a href=https://wiki.archlinux.org/index.php/Swap_file class=mw-redirect title="Swap file">swap file</a> for file systems supporting it.</ul>
+</div>
+<h3 class><span class=mw-headline id=Format_the_partitions>Format the partitions</span></h3>
+<p class>Once the partitions have been created, each must be formatted with an appropriate <a href=https://wiki.archlinux.org/index.php/File_system class=mw-redirect title="File system">file system</a>. For example, if the root partition is on <code>/dev/sd<i>X</i>1</code> and will contain the <code><i>ext4</i></code> file system, run:
+</p>
+<pre class># mkfs.<i>ext4</i> /dev/sd<i>X1</i>
+</pre>
+<p>If you created a partition for swap, initialize it with <i>mkswap</i>:
+</p>
+<pre class># mkswap /dev/sd<i>X2</i>
+# swapon /dev/sd<i>X2</i>
+</pre>
+<p>See <a href=https://wiki.archlinux.org/index.php/File_systems#Create_a_file_system title="File systems">File systems#Create a file system</a> for details.
+</p>
+<h3><span class=mw-headline id=Mount_the_file_systems>Mount the file systems</span></h3>
+<p><a href=https://wiki.archlinux.org/index.php/Mount class=mw-redirect title=Mount>Mount</a> the file system on the root partition to <code>/mnt</code>, for example:
+</p>
+<pre class># mount /dev/sd<i>X1</i> /mnt
+</pre>
+<p class>Create any remaining mount points (such as <code>/mnt/efi</code>) and mount their corresponding partitions. 
+<p><a rel=nofollow class="external text" href=https://git.archlinux.org/arch-install-scripts.git/tree/genfstab.in>genfstab</a> will later detect mounted file systems and swap space.
+</p>
+<h2><span class=mw-headline id=Installation>Installation</span></h2>
+<h3><span class=mw-headline id=Select_the_mirrors>Select the mirrors</span></h3>
+<p class>Packages to be installed must be downloaded from <a href=https://wiki.archlinux.org/index.php/Mirrors title=Mirrors>mirror servers</a>, which are defined in <code>/etc/pacman.d/mirrorlist</code>. On the live system, all mirrors are enabled, and sorted by their synchronization status and speed at the time the installation image was created.
+<p>The higher a mirror is placed in the list, the more priority it is given when downloading a package. You may want to edit the file accordingly, and move the geographically closest mirrors to the top of the list, although other criteria should be taken into account.
+<p>This file will later be copied to the new system by <i>pacstrap</i>, so it is worth getting right.
+</p>
+<h3 class><span class=mw-headline id=Install_essential_packages>Install essential packages</span></h3>
+<p>Use the <a rel=nofollow class="external text" href=https://projects.archlinux.org/arch-install-scripts.git/tree/pacstrap.in>pacstrap</a> script to install the <span class="plainlinks archwiki-template-pkg"><a rel=nofollow class="external text" href="https://www.archlinux.org/packages/?name=base">base</a></span> package, Linux <a href=https://wiki.archlinux.org/index.php/Kernel title=Kernel>kernel</a> and firmware for common hardware:
+</p>
+<pre># pacstrap /mnt base linux linux-firmware
+</pre>
+<div class="archwiki-template-box archwiki-template-box-tip"><strong>Tip:</strong> You can substitute <span class="plainlinks archwiki-template-pkg"><a rel=nofollow class="external text" href="https://www.archlinux.org/packages/?name=linux">linux</a></span> for a <a href=https://wiki.archlinux.org/index.php/Kernel title=Kernel>kernel</a> package of your choice. You can omit the installation of the kernel or the firmware package if you know what you are doing.</div>
+<p>The <span class="plainlinks archwiki-template-pkg"><a rel=nofollow class="external text" href="https://www.archlinux.org/packages/?name=base">base</a></span> package does not include all tools from the live installation, so installing other packages may be necessary for a fully functional base system. In particular, consider installing:
+</p>
+<ul><li>userspace utilities for the management of <a href=https://wiki.archlinux.org/index.php/File_systems title="File systems">file systems</a> that will be used on the system,</li>
+<li>utilities for accessing <a href=https://wiki.archlinux.org/index.php/RAID title=RAID>RAID</a> or <a href=https://wiki.archlinux.org/index.php/LVM title=LVM>LVM</a> partitions,</li>
+<li>specific firmware for other devices not included in <span class="plainlinks archwiki-template-pkg"><a rel=nofollow class="external text" href="https://www.archlinux.org/packages/?name=linux-firmware">linux-firmware</a></span>,</li>
+<li>software necessary for <a href=https://wiki.archlinux.org/index.php/Networking class=mw-redirect title=Networking>networking</a>,</li>
+<li>a <a href=https://wiki.archlinux.org/index.php/Text_editor class=mw-redirect title="Text editor">text editor</a>,</li>
+<li>packages for accessing documentation in <a href=https://wiki.archlinux.org/index.php/Man class=mw-redirect title=Man>man</a> and <a href=https://wiki.archlinux.org/index.php/Info class=mw-redirect title=Info>info</a> pages: <span class="plainlinks archwiki-template-pkg"><a rel=nofollow class="external text" href="https://www.archlinux.org/packages/?name=man-db">man-db</a></span>, <span class="plainlinks archwiki-template-pkg"><a rel=nofollow class="external text" href="https://www.archlinux.org/packages/?name=man-pages">man-pages</a></span> and <span class="plainlinks archwiki-template-pkg"><a rel=nofollow class="external text" href="https://www.archlinux.org/packages/?name=texinfo">texinfo</a></span>.</ul>
+<p>To <a href=https://wiki.archlinux.org/index.php/Install class=mw-redirect title=Install>install</a> other packages or package groups, append the names to the <i>pacstrap</i> command above (space separated) or use <a href=https://wiki.archlinux.org/index.php/Pacman title=Pacman>pacman</a> while <a href=#Chroot>chrooted into the new system</a>. For comparison, packages available in the live system can be found in <a rel=nofollow class="external text" href=https://projects.archlinux.org/archiso.git/tree/configs/releng/packages.x86_64>packages.x86_64</a>.
+</p>
+<h2><span class=mw-headline id=Configure_the_system>Configure the system</span></h2>
+<h3><span class=mw-headline id=Fstab>Fstab</span></h3>
+<p>Generate an <a href=https://wiki.archlinux.org/index.php/Fstab title=Fstab>fstab</a> file (use <code>-U</code> or <code>-L</code> to define by <a href=https://wiki.archlinux.org/index.php/UUID class=mw-redirect title=UUID>UUID</a> or labels, respectively):
+</p>
+<pre># genfstab -U /mnt &gt;&gt; /mnt/etc/fstab
+</pre>
+<p>Check the resulting <code>/mnt/etc/fstab</code> file, and edit it in case of errors.
+</p>
+<h3><span class=mw-headline id=Chroot>Chroot</span></h3>
+<p><a href=https://wiki.archlinux.org/index.php/Change_root class=mw-redirect title="Change root">Change root</a> into the new system:
+</p>
+<pre># arch-chroot /mnt
+</pre>
+<h3><span class=mw-headline id=Time_zone>Time zone</span></h3>
+<p>Set the <a href=https://wiki.archlinux.org/index.php/Time_zone class=mw-redirect title="Time zone">time zone</a>:
+</p>
+<pre># ln -sf /usr/share/zoneinfo/<i>Region</i>/<i>City</i> /etc/localtime
+</pre>
+<p>Run <span class="plainlinks archwiki-template-man" title="$ man 8 hwclock"><a rel=nofollow class="external text" href=https://jlk.fjfi.cvut.cz/arch/manpages/man/hwclock.8>hwclock(8)</a></span> to generate <code>/etc/adjtime</code>:
+</p>
+<pre># hwclock --systohc
+</pre>
+<p>This command assumes the hardware clock is set to <a href=https://en.wikipedia.org/wiki/UTC class=extiw title=wikipedia:UTC>UTC</a>. See <a href=https://wiki.archlinux.org/index.php/System_time#Time_standard title="System time">System time#Time standard</a> for details.
+</p>
+<h3><span class=mw-headline id=Localization>Localization</span></h3>
+<p>Edit <code>/etc/locale.gen</code> and uncomment <code>en_US.UTF-8 UTF-8</code> and other needed <a href=https://wiki.archlinux.org/index.php/Locale title=Locale>locales</a>. Generate the locales by running:
+</p>
+<pre># locale-gen
+</pre>
+<p>Create the <span class="plainlinks archwiki-template-man" title="$ man 5 locale.conf"><a rel=nofollow class="external text" href=https://jlk.fjfi.cvut.cz/arch/manpages/man/locale.conf.5>locale.conf(5)</a></span> file, and set the <code>LANG</code> <a href=https://wiki.archlinux.org/index.php/Variable class=mw-redirect title=Variable>variable</a> accordingly:
+</p>
+<pre style=margin-bottom:0;border-bottom:none;padding-bottom:0.8em>/etc/locale.conf</pre>
+<pre style=margin-top:0;border-top-style:dashed;padding-top:0.8em>LANG=<i>en_US.UTF-8</i></pre>
+<p>If you <a href=#Set_the_keyboard_layout>set the keyboard layout</a>, make the changes persistent in <span class="plainlinks archwiki-template-man" title="$ man 5 vconsole.conf"><a rel=nofollow class="external text" href=https://jlk.fjfi.cvut.cz/arch/manpages/man/vconsole.conf.5>vconsole.conf(5)</a></span>:
+</p>
+<pre style=margin-bottom:0;border-bottom:none;padding-bottom:0.8em>/etc/vconsole.conf</pre>
+<pre style=margin-top:0;border-top-style:dashed;padding-top:0.8em>KEYMAP=<i>de-latin1</i></pre>
+<h3><span class=mw-headline id=Network_configuration>Network configuration</span></h3>
+<p>Create the <a href=https://wiki.archlinux.org/index.php/Hostname class=mw-redirect title=Hostname>hostname</a> file:
+</p>
+<pre style=margin-bottom:0;border-bottom:none;padding-bottom:0.8em>/etc/hostname</pre>
+<pre style=margin-top:0;border-top-style:dashed;padding-top:0.8em><i>myhostname</i>
+</pre>
+<p>Add matching entries to <span class="plainlinks archwiki-template-man" title="$ man 5 hosts"><a rel=nofollow class="external text" href=https://jlk.fjfi.cvut.cz/arch/manpages/man/hosts.5>hosts(5)</a></span>:
+</p>
+<pre style=margin-bottom:0;border-bottom:none;padding-bottom:0.8em>/etc/hosts</pre>
+<pre style=margin-top:0;border-top-style:dashed;padding-top:0.8em>127.0.0.1	localhost
+::1		localhost
+127.0.1.1	<i>myhostname</i>.localdomain	<i>myhostname</i>
+</pre>
+<p>If the system has a permanent IP address, it should be used instead of <code>127.0.1.1</code>.
+<p>Complete the <a href=https://wiki.archlinux.org/index.php/Network_configuration title="Network configuration">network configuration</a> for the newly installed environment, that includes installing your preferred <a href=https://wiki.archlinux.org/index.php/Network_management class=mw-redirect title="Network management">network management</a> software.
+</p>
+<h3><span class=mw-headline id=Initramfs>Initramfs</span></h3>
+<p class>Creating a new <i>initramfs</i> is usually not required, because <a href=https://wiki.archlinux.org/index.php/Mkinitcpio title=Mkinitcpio>mkinitcpio</a> was run on installation of the <a href=https://wiki.archlinux.org/index.php/Kernel title=Kernel>kernel</a> package with <i>pacstrap</i>.
+<p class>For <a href=https://wiki.archlinux.org/index.php/Install_Arch_Linux_on_LVM#Adding_mkinitcpio_hooks title="Install Arch Linux on LVM">LVM</a>, <a href=https://wiki.archlinux.org/index.php/Dm-crypt title=Dm-crypt>system encryption</a> or <a href=https://wiki.archlinux.org/index.php/RAID#Configure_mkinitcpio title=RAID>RAID</a>, modify <span class="plainlinks archwiki-template-man" title="$ man 5 mkinitcpio.conf"><a rel=nofollow class="external text" href=https://jlk.fjfi.cvut.cz/arch/manpages/man/mkinitcpio.conf.5>mkinitcpio.conf(5)</a></span> and recreate the initramfs image:
+</p>
+<pre class># mkinitcpio -P
+</pre>
+<h3><span class=mw-headline id=Root_password>Root password</span></h3>
+<p>Set the root <a href=https://wiki.archlinux.org/index.php/Password class=mw-redirect title=Password>password</a>:
+</p>
+<pre># passwd
+</pre>
+<h3><span class=mw-headline id=Boot_loader>Boot loader</span></h3>
+<p>Choose and install a Linux-capable <a href=https://wiki.archlinux.org/index.php/Boot_loader class=mw-redirect title="Boot loader">boot loader</a>. If you have an Intel or AMD CPU, enable <a href=https://wiki.archlinux.org/index.php/Microcode title=Microcode>microcode</a> updates in addition.
+</p>
+<h2><span class=mw-headline id=Reboot>Reboot</span></h2>
+<p>Exit the chroot environment by typing <code>exit</code> or pressing <code>Ctrl+d</code>.
+<p>Optionally manually unmount all the partitions with <code>umount -R /mnt</code>: this allows noticing any "busy" partitions, and finding the cause with <span class="plainlinks archwiki-template-man" title="$ man 1 fuser"><a rel=nofollow class="external text" href=https://jlk.fjfi.cvut.cz/arch/manpages/man/fuser.1>fuser(1)</a></span>.
+<p>Finally, restart the machine by typing <code>reboot</code>: any partitions still mounted will be automatically unmounted by <i>systemd</i>. Remember to remove the installation media and then login into the new system with the root account.
+</p>
+<h2><span class=mw-headline id=Post-installation>Post-installation</span></h2>
+<p class>See <a href=https://wiki.archlinux.org/index.php/General_recommendations title="General recommendations">General recommendations</a> for system management directions and post-installation tutorials (like setting up a graphical user interface, sound or a touchpad).
+<p class>For a list of applications that may be of interest, see <a href=https://wiki.archlinux.org/index.php/List_of_applications title="List of applications" class>List of applications</a>.
+</p>
+</div></div>
+ 
+ <div class="printfooter sf-hidden">Retrieved from "<a dir=ltr href="https://wiki.archlinux.org/index.php?title=Installation_guide&amp;oldid=606911">https://wiki.archlinux.org/index.php?title=Installation_guide&amp;oldid=606911</a>"</div>
+ 
+ 
+ <div class=visualClear></div>
+ 
+ </div>
+</div>
+ <div id=mw-navigation>
+ <h2>Navigation menu</h2>
+ 
+ 
+ </div>
+ 
+ 
+
+<div class=suggestions style=display:none;font-size:13px><div class=suggestions-results></div><div class=suggestions-special></div></div><script data-template-shadow-root>(() => { document.currentScript.remove(); const processNode = node => { node.querySelectorAll("template[shadowmode]").forEach(element=>{ if (!element.parentElement.shadowRoot) { const shadowRoot = element.parentElement.attachShadow({mode:element.getAttribute("shadowmode"),delegatesFocus:Boolean(element.getAttribute("delegatesfocus"))}); shadowRoot.innerHTML = element.innerHTML; element.remove(); processNode(shadowRoot); } }) }; const FORBIDDEN_TAG_NAMES = ["a","area","audio","base","br","col","command","embed","hr","img","iframe","input","keygen","link","meta","param","source","track","video","wbr"]; const NOTE_TAGNAME = "single-file-note"; const NOTE_CLASS = "note"; const NOTE_ANCHORED_CLASS = "note-anchored"; const NOTE_SELECTED_CLASS = "note-selected"; const NOTE_MOVING_CLASS = "note-moving"; const NOTE_MASK_MOVING_CLASS = "note-mask-moving"; const MASK_CLASS = "single-file-mask"; const HIGHLIGHT_CLASS = "single-file-highlight"; const NOTES_WEB_STYLESHEET = ".note { all: initial; display: flex; flex-direction: column; height: 150px; width: 150px; position: absolute; top: 10px; left: 10px; border: 1px solid rgb(191, 191, 191); z-index: 2147483646; box-shadow: 2px 2px 5px rgba(33, 33, 33, .7); min-height: 100px; min-width: 100px; } .note-selected { z-index: 2147483647; } .note-hidden { display: none; } .note-collapsed { min-height: 30px; max-height: 30px; overflow: hidden; } .note textarea { all: initial; white-space: pre; font-family: Arial, Helvetica, sans-serif; font-size: 14px; padding: 3px; height: 100%; border: 1px solid transparent; resize: none; } .note textarea:focus { border: 1px dotted rgb(160, 160, 160); } .note header { all: initial; min-height: 30px; cursor: grab; user-select: none; } .note .note-remove { all: initial; position: absolute; right: 0px; top: 2px; padding: 5px; opacity: .5; cursor: pointer; user-select: none; } .note .note-anchor { all: initial; position: absolute; left: 0px; top: 2px; padding: 5px; opacity: .25; cursor: pointer; } .note .note-resize { all: initial; position: absolute; bottom: -5px; right: -5px; height: 15px; width: 15px; cursor: nwse-resize; user-select: none; } .note .note-remove:hover { opacity: 1; } .note .note-anchor:hover { opacity: .5; } .note-anchored .note-anchor { opacity: .5; } .note-anchored .note-anchor:hover { opacity: 1; } .note-moving { opacity: .5; } .note-moving * { cursor: grabbing; } .note-yellow header { background-color: #f5f545; } .note-yellow textarea { background-color: #ffff7c; } .note-pink header { background-color: #ffa59f; } .note-pink textarea { background-color: #ffbbb6; } .note-blue header { background-color: #84c8ff; } .note-blue textarea { background-color: #95d0ff; } .note-green header { background-color: #93ef8d; } .note-green textarea { background-color: #9cff95; }"; const MASK_WEB_STYLESHEET = ".note-mask { all: initial; position: fixed; z-index: 2147483645; pointer-events: none; } .note-mask-moving { background-color: rgba(236, 234, 234, 0.5); } .page-mask { all: initial; position: fixed; top: 0; left: 0; width: 0; height: 0; z-index: 2147483646; } .page-mask-active { width: 100vw; height: 100vh; }"; const NOTE_HEADER_HEIGHT = 25; const PAGE_MASK_ACTIVE_CLASS = "page-mask-active"; const REMOVED_CONTENT_CLASS = "single-file-removed"; const reflowNotes = function reflowNotes() { document.querySelectorAll(NOTE_TAGNAME).forEach(containerElement => { const noteElement = containerElement.shadowRoot.querySelector("." + NOTE_CLASS); const noteBoundingRect = noteElement.getBoundingClientRect(); const anchorElement = getAnchorElement(containerElement); const anchorBoundingRect = anchorElement.getBoundingClientRect(); const maxX = anchorBoundingRect.x + Math.max(0, anchorBoundingRect.width - noteBoundingRect.width); const minX = anchorBoundingRect.x; const maxY = anchorBoundingRect.y + Math.max(0, anchorBoundingRect.height - NOTE_HEADER_HEIGHT); const minY = anchorBoundingRect.y; let left = parseInt(noteElement.style.getPropertyValue("left")); let top = parseInt(noteElement.style.getPropertyValue("top")); if (noteBoundingRect.x > maxX) { left -= noteBoundingRect.x - maxX; } if (noteBoundingRect.x < minX) { left += minX - noteBoundingRect.x; } if (noteBoundingRect.y > maxY) { top -= noteBoundingRect.y - maxY; } if (noteBoundingRect.y < minY) { top += minY - noteBoundingRect.y; } noteElement.style.setProperty("position", "absolute"); noteElement.style.setProperty("left", left + "px"); noteElement.style.setProperty("top", top + "px"); }); }; const addNoteRef = function addNoteRef(anchorElement, noteId) { const noteRefs = getNoteRefs(anchorElement); noteRefs.push(noteId); setNoteRefs(anchorElement, noteRefs); }; const deleteNoteRef = function deleteNoteRef(containerElement, noteId) { const anchorElement = getAnchorElement(containerElement); const noteRefs = getNoteRefs(anchorElement).filter(noteRefs => noteRefs != noteId); if (noteRefs.length) { setNoteRefs(anchorElement, noteRefs); } else { delete anchorElement.dataset.singleFileNoteRefs; } }; const getNoteRefs = function getNoteRefs(anchorElement) { return JSON.parse("[" + (anchorElement.dataset.singleFileNoteRefs || "") + "]"); }; const setNoteRefs = function setNoteRefs(anchorElement, noteRefs) { anchorElement.dataset.singleFileNoteRefs = noteRefs.toString(); }; const getAnchorElement = function getAnchorElement(containerElement) { return document.querySelector("[data-single-file-note-refs^=" + JSON.stringify(containerElement.dataset.noteId) + "], [data-single-file-note-refs$=" + JSON.stringify(containerElement.dataset.noteId) + "], [data-single-file-note-refs*=" + JSON.stringify("," + containerElement.dataset.noteId + ",") + "]"); }; const getMaskElement = function getMaskElement(className, containerClassName) { let maskElement = document.documentElement.querySelector("." + className); if (!maskElement) { maskElement = document.createElement("div"); const maskContainerElement = document.createElement("div"); if (containerClassName) { maskContainerElement.classList.add(containerClassName); } maskContainerElement.classList.add(MASK_CLASS); const firstNote = document.querySelector(NOTE_TAGNAME); if (firstNote && firstNote.parentElement == document.documentElement) { document.documentElement.insertBefore(maskContainerElement, firstNote); } else { document.documentElement.appendChild(maskContainerElement); } maskElement.classList.add(className); const maskShadow = maskContainerElement.attachShadow({ mode: "open" }); maskShadow.appendChild(getStyleElement(MASK_WEB_STYLESHEET)); maskShadow.appendChild(maskElement); return maskElement; } }; const getStyleElement = function getStyleElement(stylesheet) { const linkElement = document.createElement("style"); linkElement.textContent = stylesheet; return linkElement; }; const attachNoteListeners = function attachNoteListeners(containerElement, editable = false) { const SELECT_PX_THRESHOLD = 4; const COLLAPSING_NOTE_DELAY = 750; const noteShadow = containerElement.shadowRoot; const noteElement = noteShadow.childNodes[1]; const headerElement = noteShadow.querySelector("header"); const mainElement = noteShadow.querySelector("textarea"); const noteId = containerElement.dataset.noteId; const resizeElement = noteShadow.querySelector(".note-resize"); const anchorIconElement = noteShadow.querySelector(".note-anchor"); const removeNoteElement = noteShadow.querySelector(".note-remove"); mainElement.readOnly = !editable; if (!editable) { anchorIconElement.style.setProperty("display", "none", "important"); } else { anchorIconElement.style.removeProperty("display"); } headerElement.ontouchstart = headerElement.onmousedown = event => { if (event.target == headerElement) { collapseNoteTimeout = setTimeout(() => noteElement.classList.toggle("note-collapsed"), COLLAPSING_NOTE_DELAY); event.preventDefault(); const position = getPosition(event); const clientX = position.clientX; const clientY = position.clientY; const boundingRect = noteElement.getBoundingClientRect(); const deltaX = clientX - boundingRect.left; const deltaY = clientY - boundingRect.top; maskPageElement.classList.add(PAGE_MASK_ACTIVE_CLASS); document.documentElement.style.setProperty("user-select", "none", "important"); anchorElement = getAnchorElement(containerElement); displayMaskNote(); selectNote(noteElement); moveNote(event, deltaX, deltaY); movingNoteMode = { event, deltaX, deltaY }; document.documentElement.ontouchmove = document.documentElement.onmousemove = event => { clearTimeout(collapseNoteTimeout); if (!movingNoteMode) { movingNoteMode = { deltaX, deltaY }; } movingNoteMode.event = event; moveNote(event, deltaX, deltaY); }; } }; resizeElement.ontouchstart = resizeElement.onmousedown = event => { event.preventDefault(); resizingNoteMode = true; selectNote(noteElement); maskPageElement.classList.add(PAGE_MASK_ACTIVE_CLASS); document.documentElement.style.setProperty("user-select", "none", "important"); document.documentElement.ontouchmove = document.documentElement.onmousemove = event => { event.preventDefault(); const { clientX, clientY } = getPosition(event); const boundingRectNote = noteElement.getBoundingClientRect(); noteElement.style.width = clientX - boundingRectNote.left + "px"; noteElement.style.height = clientY - boundingRectNote.top + "px"; }; }; anchorIconElement.ontouchend = anchorIconElement.onclick = event => { event.preventDefault(); noteElement.classList.toggle(NOTE_ANCHORED_CLASS); if (!noteElement.classList.contains(NOTE_ANCHORED_CLASS)) { deleteNoteRef(containerElement, noteId); addNoteRef(document.documentElement, noteId); } }; removeNoteElement.ontouchend = removeNoteElement.onclick = event => { event.preventDefault(); deleteNoteRef(containerElement, noteId); containerElement.remove(); }; noteElement.onmousedown = () => { selectNote(noteElement); }; function moveNote(event, deltaX, deltaY) { event.preventDefault(); const { clientX, clientY } = getPosition(event); noteElement.classList.add(NOTE_MOVING_CLASS); if (editable) { if (noteElement.classList.contains(NOTE_ANCHORED_CLASS)) { deleteNoteRef(containerElement, noteId); anchorElement = getTarget(clientX, clientY) || document.documentElement; addNoteRef(anchorElement, noteId); } else { anchorElement = document.documentElement; } } document.documentElement.insertBefore(containerElement, maskPageElement.getRootNode().host); noteElement.style.setProperty("left", (clientX - deltaX) + "px"); noteElement.style.setProperty("top", (clientY - deltaY) + "px"); noteElement.style.setProperty("position", "fixed"); displayMaskNote(); } function displayMaskNote() { if (anchorElement == document.documentElement || anchorElement == document.documentElement) { maskNoteElement.classList.remove(NOTE_MASK_MOVING_CLASS); } else { const boundingRectAnchor = anchorElement.getBoundingClientRect(); maskNoteElement.classList.add(NOTE_MASK_MOVING_CLASS); maskNoteElement.style.setProperty("top", boundingRectAnchor.y + "px"); maskNoteElement.style.setProperty("left", boundingRectAnchor.x + "px"); maskNoteElement.style.setProperty("width", boundingRectAnchor.width + "px"); maskNoteElement.style.setProperty("height", boundingRectAnchor.height + "px"); } } function selectNote(noteElement) { if (selectedNote) { selectedNote.classList.remove(NOTE_SELECTED_CLASS); } noteElement.classList.add(NOTE_SELECTED_CLASS); selectedNote = noteElement; } function getTarget(clientX, clientY) { const targets = Array.from(document.elementsFromPoint(clientX, clientY)).filter(element => element.tagName.toLowerCase() != NOTE_TAGNAME && !element.classList.contains(MASK_CLASS)); if (!targets.includes(document.documentElement)) { targets.push(document.documentElement); } let newTarget, target = targets[0], boundingRect = target.getBoundingClientRect(); newTarget = determineTargetElement("floor", target, clientX - boundingRect.left, getMatchedParents(target, "left")); if (newTarget == target) { newTarget = determineTargetElement("ceil", target, boundingRect.left + boundingRect.width - clientX, getMatchedParents(target, "right")); } if (newTarget == target) { newTarget = determineTargetElement("floor", target, clientY - boundingRect.top, getMatchedParents(target, "top")); } if (newTarget == target) { newTarget = determineTargetElement("ceil", target, boundingRect.top + boundingRect.height - clientY, getMatchedParents(target, "bottom")); } target = newTarget; while (boundingRect = target && target.getBoundingClientRect(), boundingRect && boundingRect.width <= SELECT_PX_THRESHOLD && boundingRect.height <= SELECT_PX_THRESHOLD) { target = target.parentElement; } return target; } function getMatchedParents(target, property) { let element = target, matchedParent, parents = []; do { const boundingRect = element.getBoundingClientRect(); if (element.parentElement && !element.parentElement.tagName.toLowerCase() != NOTE_TAGNAME && !element.classList.contains(MASK_CLASS)) { const parentBoundingRect = element.parentElement.getBoundingClientRect(); matchedParent = Math.abs(parentBoundingRect[property] - boundingRect[property]) <= SELECT_PX_THRESHOLD; if (matchedParent) { if (element.parentElement.clientWidth > SELECT_PX_THRESHOLD && element.parentElement.clientHeight > SELECT_PX_THRESHOLD && ((element.parentElement.clientWidth - element.clientWidth > SELECT_PX_THRESHOLD) || (element.parentElement.clientHeight - element.clientHeight > SELECT_PX_THRESHOLD))) { parents.push(element.parentElement); } element = element.parentElement; } } else { matchedParent = false; } } while (matchedParent && element); return parents; } function determineTargetElement(roundingMethod, target, widthDistance, parents) { if (Math[roundingMethod](widthDistance / SELECT_PX_THRESHOLD) <= parents.length) { target = parents[parents.length - Math[roundingMethod](widthDistance / SELECT_PX_THRESHOLD) - 1]; } return target; } }; const anchorNote = function anchorNote(event, noteElement, deltaX, deltaY) { event.preventDefault(); const { clientX, clientY } = getPosition(event); document.documentElement.style.removeProperty("user-select"); noteElement.classList.remove(NOTE_MOVING_CLASS); maskNoteElement.classList.remove(NOTE_MASK_MOVING_CLASS); maskPageElement.classList.remove(PAGE_MASK_ACTIVE_CLASS); const headerElement = noteElement.querySelector("header"); headerElement.ontouchmove = document.documentElement.onmousemove = null; let currentElement = anchorElement; let positionedElement; while (currentElement.parentElement && !positionedElement) { if (!FORBIDDEN_TAG_NAMES.includes(currentElement.tagName.toLowerCase())) { const currentElementStyle = getComputedStyle(currentElement); if (currentElementStyle.position != "static") { positionedElement = currentElement; } } currentElement = currentElement.parentElement; } if (!positionedElement) { positionedElement = document.documentElement; } const containerElement = noteElement.getRootNode().host; if (positionedElement == document.documentElement) { const firstMaskElement = document.querySelector("." + MASK_CLASS); document.documentElement.insertBefore(containerElement, firstMaskElement); } else { positionedElement.appendChild(containerElement); } const boundingRectPositionedElement = positionedElement.getBoundingClientRect(); const stylePositionedElement = window.getComputedStyle(positionedElement); const borderX = parseInt(stylePositionedElement.getPropertyValue("border-left-width")); const borderY = parseInt(stylePositionedElement.getPropertyValue("border-top-width")); noteElement.style.setProperty("position", "absolute"); noteElement.style.setProperty("left", (clientX - boundingRectPositionedElement.x - deltaX - borderX) + "px"); noteElement.style.setProperty("top", (clientY - boundingRectPositionedElement.y - deltaY - borderY) + "px"); }; const getPosition = function getPosition(event) { if (event.touches && event.touches.length) { const touch = event.touches[0]; return touch; } else { return event; } }; const onMouseUp = function onMouseUp(event) { if (highlightSelectionMode) { highlightSelection(); } if (removeHighlightMode) { let element = event.target, done; while (element && !done) { if (element.classList.contains(HIGHLIGHT_CLASS)) { document.querySelectorAll("." + HIGHLIGHT_CLASS + "[data-singlefile-highlight-id=" + JSON.stringify(element.dataset.singlefileHighlightId) + "]").forEach(highlightedElement => { resetHighlightedElement(highlightedElement); }); done = true; } element = element.parentElement; } } if (resizingNoteMode) { resizingNoteMode = false; document.documentElement.style.removeProperty("user-select"); maskPageElement.classList.remove(PAGE_MASK_ACTIVE_CLASS); document.documentElement.ontouchmove = document.documentElement.onmousemove = null; } if (movingNoteMode) { anchorNote(movingNoteMode.event || event, selectedNote, movingNoteMode.deltaX, movingNoteMode.deltaY); movingNoteMode = null; document.documentElement.ontouchmove = document.documentElement.onmousemove = null; } if (collapseNoteTimeout) { clearTimeout(collapseNoteTimeout); collapseNoteTimeout = null; } if (cuttingMode) { let element = event.target; if (document.documentElement != element && element.tagName.toLowerCase() != NOTE_TAGNAME) { element.classList.add(REMOVED_CONTENT_CLASS); removedElements.push(element); } } }; const maskNoteElement = getMaskElement("note-mask"); const maskPageElement = getMaskElement("page-mask", "single-file-page-mask"); let selectedNote, highlightSelectionMode, removeHighlightMode, resizingNoteMode, movingNoteMode, collapseNoteTimeout, cuttingMode; window.onresize = reflowNotes; document.documentElement.onmouseup = document.documentElement.ontouchend = onMouseUp; window.addEventListener("DOMContentLoaded", () => { processNode(document); reflowNotes(); document.querySelectorAll("single-file-note").forEach(noteElement => attachNoteListeners(noteElement)); }); })()</script><style>.single-file-highlight-yellow { background-color: #ffff7c !important; color: black !important; } span.single-file-highlight-yellow { display: inline !important; } .single-file-highlight-pink { background-color: #ffbbb6 !important; color: black !important; } span.single-file-highlight-pink { display: inline !important; } .single-file-highlight-blue { background-color: #95d0ff !important; color: black !important; } span.single-file-highlight-blue { display: inline !important; } .single-file-highlight-green { background-color: #93ef8d !important; color: black !important; } span.single-file-highlight-green { display: inline !important; } .single-file-highlight-hidden { background-color: inherit !important; color: inherit !important; } .single-file-mask { all: initial; display: contents !important; } .single-file-mask.single-file-page-mask { opacity: .99 !important; } single-file-note { all: initial !important; display: contents !important; } .single-file-hover { outline: 1px solid red !important; } .single-file-removed { display: none !important; float: none !important; position: static !important; visibility: collapse !important; }</style>

@@ -1,0 +1,70 @@
+linux让程序开机自动运行最管用的方法
+
+1.搜集了很多个，均以失败告终，最后发现，这个办法好，而且不影响使用，对于安装了xampp的系统来说，更加重要，希望大家赞同。方法如下：
+
+    在/etc/init.d目录中新建文件，并设置文件权限为可运行。名字随便取，我起的名字是：xamppv。内容如下，尤其是前几个带有#号的行，不可少，不可改。  
+
+#!/bin/sh
+### BEGIN INIT INFO
+# Default-Start: 2 3 4 5
+# Default-Stop: 0 1 6
+### END INIT INFO
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+sudo /opt/lampp/xampp start
+
+    将以上文件存于/etc/init.d目录中，并执行以下命令：
+    sudo systemctl enable xamppv
+    sudo systemctl start xamppv可立刻启动程序。
+    下面的命令可以使用(不用也没关系)：
+    update-rc.d xampp defaults 400
+
+　　加入以下脚本命令即可：
+
+#!/bin/sh
+### BEGIN INIT INFO
+# Default-Start:  2 3 4 5
+# Default-Stop: 0 1 6
+### END INIT INFO
+
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+case $1 in
+    start)
+        /opt/lampp/xampp start
+        ;;
+
+    stop)
+        /opt/lampp/xampp stop
+        ;;
+
+    restart)
+        /opt/lampp/xampp restart
+        ;;
+
+    *)  echo "$0 {start|stop|restart|status}"
+        exit 4
+        ;;
+esac
+
+    设置完成，重启电脑吧！
+
+2.以下是设置成真正的服务，系统启动就运行。真管用！
+[Unit]
+Description=Xampp service
+After=network.target remote-fs.target
+
+[Service]
+Type=simple
+ExecStart=/opt/lampp/xampp start
+ExecStop=/opt/lampp/xampp stop
+KillMode=process
+Restart=on-failure
+RestartSec=0s
+
+[Install]
+WantedBy=multi-user.target
+
+注意：Type=forking，则不需要加KillMode=process这行，否则必须加，不然服务不能启动。后面Restart=on-failure和RestartSec=40s可以删除，也能正常启动。将以上内容存入文件：/usr/lib/systemd/system/目录下新建一个文件中(xamp.service)。然后用sudo systemctl start xamp.service启动服务。
+
+3.在/etc/profile.d目录下的脚本都会在开机登录后以用户模式自带运行，因此，对于可以在此文件夹下建立一个脚本以启动程序。若需要以管理员方式运行，可以使用如下命令
+    echo "管理员密码" | sudo -S "用户命令"

@@ -1,0 +1,18 @@
+capslock映射esc
+
+Caps Lock对我们来说基本就是多余的，而且在键盘中的位置根本不合理，一不小心就按到了Caps Lock，然后就出错了。Esc又是vim下使用最为频繁的按键，将Caps Lock替换成Esc真是再好不过了，而且不用担心按<ESC>的时候按到了该死的<F1>。
+
+可能有人会问，这样对于连续的大写不是就不方便了吗？我们可以先用小写，然后选中该段文中，按U，就变成大写了。现在是不是觉得Caps Lock确实是多余的啊？
+
+替换方法：
+
+xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
+
+经作者测试，当计算机重启以后，Caps Lock又恢复了，这不是我们所期望的，不过仔细想想这样的话也有个好处，如果我们去用别人的计算机，总不好把别人的Caps Lock改成ESC吧，但是暂时改一下总是可以的，对于这种情况，上面这条语句再合适不过了。但是还是有个问题需要解决，我们总不能在自己电脑上每次开启都手动执行这条语句吧，答案也是显然的，让linux每次开机去帮我们执行这条语句——在 .profile 的最后加上上面的这条语句即可。在你自己电脑上，把Caps Lock改成ESC就无所谓了，具体方法请参考：http://c2.com/cgi/wiki?RemapCapsLock
+
+对于在vim中的大写，这里还有一个小技巧推荐给大家：
+
+[plain] view plaincopyprint?
+"change word to uppercase, I love this very much
+inoremap <C-u> <esc>gUiwea
+上面这条语句是放在.vimrc文件里的，它的作用就是在编辑状态下，按ctrl+u，将你刚刚输入的那个单词变成大写。

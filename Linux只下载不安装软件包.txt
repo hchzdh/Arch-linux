@@ -1,0 +1,6 @@
+Linux只下载不安装软件包
+有时我们并不需要安装软件而只要下载软件包。
+
+包格式    命令              命令所属包    命令下载格式
+rpm      yumdownloader    yum-utils    yumdownloader package_name
+deb      apt-get          apt          apt-get download package_name

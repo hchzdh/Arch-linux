@@ -1,0 +1,10 @@
+Ubuntu下查看APT安装的软件安装路径和版本
+
+1、查询安装路径
+dpkg -L 软件名
+
+whereis 软件名
+
+2、查询版本
+aptitude show 软件名
+此方法可以查看依赖包。

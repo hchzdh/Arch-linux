@@ -1,0 +1,31 @@
+前提
+tmux版本2.9,下载链接 已经按照官网提示安装好libevent，并且安装好tmux(./configure && make && make install)
+
+问题
+在运行tmux的时候，提示：tmux: error while loading shared libraries: libevent-2.1.so.7: cannot open shared object file: No such file or directory
+
+排查
+先执行 locate libevent-2.1.so 确定libevent安装成功；
+
+再执行 LD_DEBUG=libs tmux -v 查看tmux lib加载顺序，此时发现问题
+
+      7988:	find library=libutil.so.1 [0]; searching
+      7988:	 search cache=/etc/ld.so.cache
+      7988:	  trying file=/lib64/libutil.so.1
+      7988:	
+      7988:	find library=libevent-2.1.so.7 [0]; searching
+      7988:	 search cache=/etc/ld.so.cache
+      7988:	 search path=/lib64/tls/x86_64:/lib64/tls:/lib64/x86_64:/lib64:/usr/lib64/tls/x86_64:/usr/lib64/tls:/usr/lib64/x86_64:/usr/lib64		(system search path)
+      7988:	  trying file=/lib64/tls/x86_64/libevent-2.1.so.7
+      7988:	  trying file=/lib64/tls/libevent-2.1.so.7
+      7988:	  trying file=/lib64/x86_64/libevent-2.1.so.7
+      7988:	  trying file=/lib64/libevent-2.1.so.7
+      7988:	  trying file=/usr/lib64/tls/x86_64/libevent-2.1.so.7
+      7988:	  trying file=/usr/lib64/tls/libevent-2.1.so.7
+      7988:	  trying file=/usr/lib64/x86_64/libevent-2.1.so.7
+      7988:	  trying file=/usr/lib64/libevent-2.1.so.7
+      7988:	
+tmux: error while loading shared libraries: libevent-2.1.so.7: cannot open shared object file: No such file or directory
+
+解决
+做一个软连接即可 sudo ln -s /usr/local/lib/libevent-2.1.so.7 /usr/lib64/

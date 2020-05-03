@@ -1,0 +1,23 @@
+Windows + linux 双系统修改启动顺序
+使用Windows + linux 双系统的用户可以使用如下方法修改启动顺序
+
+一、简单命令操作
+1. 首先找到Windows的菜单menuentry.
+
+$ cat /boot/grub2/grub.cfg | grep Windows
+输出：
+
+menuentry 'Windows 7 (loader) (on /dev/sda1)' --class windows --class os $menuentry_id_option 'osprober-chain-58D89313D892EF0E' {
+menuentry 'Windows 7 (loader) (on /dev/sda2)' --class windows --class os $menuentry_id_option 'osprober-chain-6CA09A83A09A5384' {
+
+
+2. 设置Windows 作为默认的启动项(这儿只能使用上面命令输出中双引号  "  "  或 者单引号    ‘     ‘   中的内容)
+
+$ grub2-set-default 'Windows 7 (loader) (on /dev/sda1)'
+
+3. 验证默认启动项
+$ grub2-editenv list
+输出：saved_entry=Windows 7 (loader) (on /dev/sda1)
+
+二、修改文件
+$ vi /boot/grub/grub.conf 中修改
